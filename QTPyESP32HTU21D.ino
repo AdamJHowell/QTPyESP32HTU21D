@@ -26,8 +26,8 @@
 //const char* mqttBroker = "yourBrokerAddress";	// Typically kept in "privateInfo.h".
 //const int mqttPort = 1883;							// Typically kept in "privateInfo.h".
 const char* mqttTopic = "espWeather";
-const String sketchName = "ESP32HTU21D";
-const char* notes = "Adafruit ESP32-S2 QT Py HTU21D";
+const String sketchName = "QTPyESP32HTU21D";
+const char* notes = "Adafruit QT Py ESP32-S2 with HTU21D";
 char ipAddress[16];
 char macAddress[18];
 int loopCount = 0;
@@ -178,8 +178,8 @@ void loop()
 
 	// Print the sensor data to the serial port.
 	Serial.print( "Measurement took " );
-	Serial.print( stop - start );
-	Serial.println( " microseconds." );
+	Serial.print( ( stop - start ) / 1000 );
+	Serial.println( " milliseconds." );
 	Serial.print( "\tTemp: " );
 	Serial.print( htu21d.getTemperature(), 1 );
 	Serial.print( "\tRH %: " );
@@ -209,11 +209,13 @@ void loop()
 	// Prepare a String to hold the JSON.
 	char mqttString[512];
 	// Write the readings to the String in JSON format.
-	snprintf( mqttString, 512, "{\n\t\"sketch\": \"%s\",\n\t\"mac\": \"%s\",\n\t\"ip\": \"%s\",\n\t\"tempC\": %.2f,\n\t\"humidity\": %.2f,\n\t\"uptime\": %d,\n\t\"notes\": \"%s\"\n}", sketchName, macAddress, ipAddress, temp.temperature, humidity.relative_humidity, loopCount, notes );
+	snprintf( mqttString, 512, "{\n\t\"sketch\": \"%s\",\n\t\"mac\": \"%s\",\n\t\"ip\": \"%s\",\n\t\"tempC\": %.2f,\n\t\"humidity\": %.2f,\n\t\"uptime\": %d,\n\t\"notes\": \"%s\"\n}", sketchName, macAddress, ipAddress, htu21d.getTemperature(), htu21d.getHumidity(), loopCount, notes );
 	if( mqttClient.connected() )
 	{
 		// Publish the JSON to the MQTT broker.
 		mqttClient.publish( mqttTopic, mqttString );
+		Serial.print( "Published to topic " );
+		Serial.println( mqttTopic );
 	}
 	else
 	{
