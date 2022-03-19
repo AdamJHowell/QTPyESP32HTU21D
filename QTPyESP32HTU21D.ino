@@ -50,8 +50,8 @@ void setup()
 {
 	// Start the Serial communication to send messages to the computer.
 	Serial.begin( 115200 );
-	while( !Serial )
-		delay( 100 );
+	if( !Serial )
+		delay( 1000 );
 	Serial.println( "Setup is initializing the I2C bus for the Stemma QT port." );
 	Wire.setPins( SDA1, SCL1 );	// This is what selects the Stemma QT port, otherwise the two pin headers will be I2C.
 	Wire.begin();
