@@ -2,6 +2,7 @@
 .idea/
 *.iml
 privateInfo.h
+networkVariables.h
 
 # Prerequisites
 *.d
