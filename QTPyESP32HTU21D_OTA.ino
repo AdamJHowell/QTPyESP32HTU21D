@@ -3,7 +3,7 @@
  * This sketch will use a HTU21D (SHT20/SHT21 compatible) sensor to measure temperature and humidity.
  * The ESP-32 SDA pin is GPIO21, and SCL is GPIO22.
  * @copyright   Copyright © 2022 Adam Howell
- * @licence     The MIT License (MIT)
+ * @license     The MIT License (MIT)
  */
 #include "WiFi.h"						// This header is part of the standard library.  https://www.arduino.cc/en/Reference/WiFi
 #include <Wire.h>						// This header is part of the standard library.  https://www.arduino.cc/en/reference/wire
@@ -234,7 +234,7 @@ void loop()
 	// Set the LED color to yellow.
 	pixels.fill( YELLOW );
 	pixels.show();
-	delay( 100 );	
+	delay( 100 );
 
 	yield();
 	Serial.println( "Calling OTA handler..." );
